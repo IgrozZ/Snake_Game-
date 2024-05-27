@@ -1,0 +1,84 @@
+body, html {
+    font-size: 16;
+    margin: 0;
+    padding: 0;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background-color: #171c28;
+}
+#gameCanvas {
+    width: 720px;
+    height: 480px;
+    background-color: #050523;
+    background-image: url("imgs/board(1).png");
+    position: absolute;
+    margin: auto;
+    display: block;
+    justify-content: center;
+    align-items: center;
+    top: 22.20%;
+    left: 31.25%;
+    z-index: 100;
+}
+
+.frame-container {
+    position: relative;
+    width: fit-content;
+    margin: auto;
+}
+.frame {
+    padding-top: 64px;
+    position: relative;
+    z-index: 500;
+}
+
+
+.score-display {
+    position: absolute;
+    top: 14.8%;
+    left: 34.9%;
+    transform: translate(-50%, -50%);
+    color: green;
+    font-family: Arial, sans-serif;
+    font-size: 16px;
+    text-align: center;
+    z-index: 1000;
+}
+
+.goal-display {
+    position: absolute;
+    top: 14.8%;
+    left: 64.6%;
+    transform: translate(-50%, -50%);
+    color: green;
+    font-family: Arial, sans-serif;
+    font-size: 16px;
+    text-align: center;
+    z-index: 1000;
+}
+
+
+.lastOp-display {
+    position: absolute;
+    top: 14.8%;
+    left: 45%;
+    transform: translate(-50%, -50%);
+    color: green;
+    font-family: Arial, sans-serif;
+    font-size: 16px;
+    text-align: center;
+    z-index: 1000;
+}
+
+.cValue-display {
+    position: absolute;
+    top: 14.8%;
+    left: 54%;
+    transform: translate(-50%, -50%);
+    color: green;
+    font-family: Arial, sans-serif;
+    font-size: 16px;
+    text-align: center;
+    z-index: 1000;
+}
