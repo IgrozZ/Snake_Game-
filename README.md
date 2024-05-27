@@ -8,7 +8,7 @@ The goal is to reach the target score displayed on the game's rightmost visor. P
 - Mathematical Gameplay: Collect positive and negative numbers to adjust your score.
 - Segment Growth: Positive numbers add two segments, negative numbers remove two segments.
 - Food Spawning Mechanism: Every 15 numbers collected, 10 new numbers spawn.
-- 
+
 - Power-ups:
   - Refresh Power-up: Press 'R' to refresh numbers, increasing negative spawn rates. Cooldown: 120 seconds. Duration: 20 seconds.
   - Quick Refresh Power-up: Activated by collecting all positives during the refresh effect. Duration: 15 seconds.
