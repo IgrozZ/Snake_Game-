@@ -25,7 +25,7 @@ The goal is to reach the target score displayed on the game's rightmost visor. P
 ##
 ##
 
- pt-BR #
+ # pt-BR 
 # Jogo da Cobra
 
 ## Descrição
