@@ -24,7 +24,7 @@ The goal is to reach the target score displayed on the game's rightmost visor. P
 
 
 
-## pt-BR ##
+## pt-BR
 # Jogo da Cobra
 
 ## Descrição
@@ -41,9 +41,9 @@ Uma abordagem única do clássico jogo da cobra com um toque matemático. Em vez
 - Power-up de Multiplicação: Pressione 'M' para multiplicar o valor do próximo número coletado. Disponível após 15 números coletados. Cresce quatro segmentos com números positivos, ajusta a contagem de segmentos com base em números negativos.
   
 ## Recursos Futuramente Disponíveis
--Ícones de Power-ups: Adição de ícones e temporizadores para power-ups.
--Melhorias no Tabuleiro: Design aprimorado do tabuleiro e estilo dos números.
--Novos Power-ups: Novos power-ups para adicionar variedade à jogabilidade.
--Novos Modos de Jogo: Introdução de diferentes modos de jogo para desafios variados.
--Adição de Paredes: Adição de paredes nas laterais do jogo para aumentar a dificuldade.
--Ajustes de Lógica Menores: Refinamentos na geração de alimentos e na lógica geral do jogo.
+- Ícones de Power-ups: Adição de ícones e temporizadores para power-ups.
+- Melhorias no Tabuleiro: Design aprimorado do tabuleiro e estilo dos números.
+- Novos Power-ups: Novos power-ups para adicionar variedade à jogabilidade.
+- Novos Modos de Jogo: Introdução de diferentes modos de jogo para desafios variados.
+- Adição de Paredes: Adição de paredes nas laterais do jogo para aumentar a dificuldade.
+- Ajustes de Lógica Menores: Refinamentos na geração de alimentos e na lógica geral do jogo.
