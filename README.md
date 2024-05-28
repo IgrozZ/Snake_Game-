@@ -23,8 +23,9 @@ The goal is to reach the target score displayed on the game's rightmost visor. P
 -Minor Logic Adjustments: Refinements in food generation and overall game logic.
 
 ##
+##
 
-# pt-BR
+ pt-BR #
 # Jogo da Cobra
 
 ## Descrição
@@ -46,4 +47,4 @@ Uma abordagem única do clássico jogo da cobra com um toque matemático. Em vez
 - Novos Power-ups: Novos power-ups para adicionar variedade à jogabilidade.
 - Novos Modos de Jogo: Introdução de diferentes modos de jogo para desafios variados.
 - Adição de Paredes: Adição de paredes nas laterais do jogo para aumentar a dificuldade.
-- Ajustes de Lógica Menores: Refinamentos na geração de alimentos e na lógica geral do jogo.
+- Ajustes de Lógica Menores: Refinamentos na geração de números e na lógica geral do jogo.
