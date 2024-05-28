@@ -23,8 +23,8 @@ The goal is to reach the target score displayed on the game's rightmost visor. P
 -Minor Logic Adjustments: Refinements in food generation and overall game logic.
 
 
-pt-BR:
 
+## pt-BR ##
 # Jogo da Cobra
 
 ## Descrição
