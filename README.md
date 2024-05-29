@@ -2,11 +2,11 @@
 
 ## Description
 A unique take on the classic snake game with a mathematical twist. Instead of fruits, the player collects numbers that add or subtract from the last collected number. 
-The goal is to reach the target score displayed on the game's rightmost visor. Positive numbers add snake segments, while negative numbers remove them, introducing strategic gameplay elements.
+The goal is to reach each target goal displayed on the game's rightmost visor. Positive numbers add snake segments, while negative numbers remove them, introducing strategic gameplay elements.
 
 #
 ## Features
-- Mathematical Gameplay: Collect positive and negative numbers to adjust your score.
+- Mathematical Gameplay: Collect positive and negative numbers to reach the goal.
 - Segment Growth: Positive numbers add two segments, negative numbers remove two segments.
 - Food Spawning Mechanism: Every 15 numbers collected, 10 new numbers spawn.
 
@@ -33,7 +33,7 @@ The goal is to reach the target score displayed on the game's rightmost visor. P
 # Jogo da Cobra
 
 ## Descrição
-Uma abordagem única do clássico jogo da cobra com um toque matemático. Em vez de frutas, o jogador coleta números que somam ou subtraem do último número coletado. O objetivo é alcançar a pontuação-alvo exibida no visor à direita do jogo. Números positivos adicionam segmentos à cobra, enquanto números negativos os removem, introduzindo elementos de estratégia ao jogo.
+Uma abordagem única do clássico jogo da cobra com um toque matemático. Em vez de frutas, o jogador coleta números que somam ou subtraem do último número coletado. O objetivo é alcançar o objetivo exibida no visor mais à direita do jogo. Números positivos adicionam segmentos à cobra, enquanto números negativos os removem, introduzindo elementos de estratégia ao jogo.
 
 #
 ## Recursos
