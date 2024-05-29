@@ -40,8 +40,9 @@ Uma abordagem única do clássico jogo da cobra com um toque matemático. Em vez
 -Power-up de Atualização: Pressione 'R' para atualizar os números, aumentando as taxas de aparição de negativos. Tempo de recarga: 120 segundos. Duração: 20 segundos.
 - Power-up de Atualização Rápida: Ativado ao coletar todos os positivos durante o efeito de atualização. Duração: 15 segundos.
 - Power-up de Multiplicação: Pressione 'M' para multiplicar o valor do próximo número coletado. Disponível após 15 números coletados. Cresce quatro segmentos com números positivos, ajusta a contagem de segmentos com base em números negativos.
-  
-## Recursos Futuramente Disponíveis
+##
+
+- Recursos Futuramente Disponíveis
 - Ícones de Power-ups: Adição de ícones e temporizadores para power-ups.
 - Melhorias no Tabuleiro: Design aprimorado do tabuleiro e estilo dos números.
 - Novos Power-ups: Novos power-ups para adicionar variedade à jogabilidade.
