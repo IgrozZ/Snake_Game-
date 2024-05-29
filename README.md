@@ -15,12 +15,12 @@ The goal is to reach the target score displayed on the game's rightmost visor. P
   - Multiply Power-up: Press 'M' to multiply the next collected number's value. Available after 15 numbers collected. Grows by four segments with positive numbers, adjusts segment count based on negative numbers.
 
 ## Upcoming Features
--Power-up Icons: Adding icons and timers for power-ups.
--Board Enhancements: Improved board design and number styling.
--Additional Power-ups: New power-ups to add variety to the gameplay.
--New Game Modes: Introducing different game modes for varied challenges.
--Wall Addition: Adding walls to the sides of the game for added difficulty.
--Minor Logic Adjustments: Refinements in food generation and overall game logic.
+- Power-up Icons: Adding icons and timers for power-ups.
+- Board Enhancements: Improved board design and number styling.
+- Additional Power-ups: New power-ups to add variety to the gameplay.
+- New Game Modes: Introducing different game modes for varied challenges.
+- Wall Addition: Adding walls to the sides of the game for added difficulty.
+- Minor Logic Adjustments: Refinements in food generation and overall game logic.
 
 ##
 ##
