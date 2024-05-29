@@ -11,12 +11,13 @@ The goal is to reach the target score displayed on the game's rightmost visor. P
 - Food Spawning Mechanism: Every 15 numbers collected, 10 new numbers spawn.
 
 #
-- Power-ups:
+## Power-ups:
   - Refresh Power-up: Press 'R' to refresh numbers, increasing negative spawn rates. Cooldown: 120 seconds. Duration: 20 seconds.
   - Quick Refresh Power-up: Activated by collecting all positives during the refresh effect. Duration: 15 seconds.
   - Multiply Power-up: Press 'M' to multiply the next collected number's value. Available after 15 numbers collected. Grows by four segments with positive numbers, adjusts segment count based on negative numbers.
 
-#
+##
+
 ## Upcoming Features
 - Power-up Icons: Adding icons and timers for power-ups.
 - Board Enhancements: Improved board design and number styling.
@@ -41,10 +42,11 @@ Uma abordagem única do clássico jogo da cobra com um toque matemático. Em vez
 - Mecanismo de Geração de Alimentos: A cada 15 números coletados, 10 novos números aparecem.
 
 #
-# Power-ups:
+## Power-ups:
 -Power-up de Atualização: Pressione 'R' para atualizar os números, aumentando as taxas de aparição de negativos. Tempo de recarga: 120 segundos. Duração: 20 segundos.
 - Power-up de Atualização Rápida: Ativado ao coletar todos os positivos durante o efeito de atualização. Duração: 15 segundos.
 - Power-up de Multiplicação: Pressione 'M' para multiplicar o valor do próximo número coletado. Disponível após 15 números coletados. Cresce quatro segmentos com números positivos, ajusta a contagem de segmentos com base em números negativos.
+
 ##
 
 ## Recursos Futuramente Disponíveis
