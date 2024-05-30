@@ -19,12 +19,14 @@ The goal is to reach each target goal displayed on the game's rightmost visor. P
 ##
 
 ## Upcoming Features
-- Power-up Icons: Adding icons and timers for power-ups.
 - Board Enhancements: Improved board design and number styling.
 - Additional Power-ups: New power-ups to add variety to the gameplay.
 - New Game Modes: Introducing different game modes for varied challenges.
 - Wall Addition: Adding walls to the sides of the game for added difficulty.
 - Minor Logic Adjustments: Refinements in food generation and overall game logic.
+
+## Added Features
+- 05/30 - "Power-up Icons: Adding icons and timers for power-ups." Done.
 
 ##
 ##
@@ -50,9 +52,11 @@ Uma abordagem única do clássico jogo da cobra com um toque matemático. Em vez
 ##
 
 ## Recursos Futuramente Disponíveis
-- Ícones de Power-ups: Adição de ícones e temporizadores para power-ups.
 - Melhorias no Tabuleiro: Design aprimorado do tabuleiro e estilo dos números.
 - Novos Power-ups: Novos power-ups para adicionar variedade à jogabilidade.
 - Novos Modos de Jogo: Introdução de diferentes modos de jogo para desafios variados.
 - Adição de Paredes: Adição de paredes nas laterais do jogo para aumentar a dificuldade.
 - Ajustes de Lógica Menores: Refinamentos na geração de números e na lógica geral do jogo.
+
+## Recursos Implementados:
+- 30/05 - "Ícones de Power-ups: Adição de ícones e temporizadores para power-ups." Feito.
