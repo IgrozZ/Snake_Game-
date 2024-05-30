@@ -10,7 +10,17 @@
     <link rel="stylesheet" href="mathstyle.css">
 </head>
 <body>
-    <canvas id="gameCanvas" width="720" height="480"></canvas>
+    <div id="gameContainer" class="game-container">
+        <canvas id="gameCanvas" width="720" height="480"></canvas>
+        <div id="indicatorsContainer" class="indicators-container">
+            <div id="indicators" class="indicators">
+                <img id="multiplyIndicator" class="indicator" src="imgs/icons/multiply_notReady.png" alt="Multiply Power-Up">
+                <img id="refreshIndicator" class="indicator" src="imgs/icons/refresh_notReady.png" alt="Refresh Power-Up">
+                <img id="quickRefreshIndicator" class="indicator" src="imgs/icons/quickRefresh_notReady.png" alt="Quick Refresh Power-Up">    
+            </div>
+        </div>
+    </div>
+    
     <script src="styleConfig.js"></script>
     <script src="mathscript.js"></script>
 

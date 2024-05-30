@@ -19,7 +19,6 @@ const debugSettings = {
     snakeTotalSegments: false
 };
 
-
 // ------------
 // Global Variables
 // ------------
@@ -78,7 +77,8 @@ const gameState = {
     multiplyPowerUpAvailable: false, // Tracks whether multiply power-up is available
     multiplyPowerUpUses: 0, // How many uses there are for multiply power-up
     multiplyNext: false,  // Indicates if the next food should trigger multiplication
-    toggledMultiplyPowerUp: false // Indicates if the multiply power-up is toggled
+    toggledMultiplyPowerUp: false, // Indicates if the multiply power-up is toggled
+    hidePowerUpIcons: false // Property to track the visibility of power-up icons
 }
 
 // ------------
@@ -118,14 +118,117 @@ const turnFrames = {
     down_to_left: loadImage('imgs/sprite/head/turn/down_to_left.png', 'Turn frame image for down to left')
 };
 
+
+
+
 // ------------
 // Game Drawing
 // ------------
 
-// Function to set up UI styles
+const drawModule = (function()  {
+    // Function to set up UI styles
 function drawUI() {
     ctx.font = styleConfig.ui.font; // Set font for UI elements
     ctx.fillStyle = styleConfig.ui.fillStyle; // Set fill color for UI elements
+}
+
+    // Function to draw the snake on the canvas
+    function drawSnake() {
+        gameState.snake.forEach((segment, index) => {
+            segment.visualX = segment.x; // Set visual X coordinate
+            segment.visualY = segment.y; // Set visual Y coordinate
+
+            if (index === 0) { // If the segment is the head
+                // Draw the head image based on the current direction
+                if (isTurning) { // If the snake is turning
+                    let elapsedTime = performance.now() - turnStartTime; // Calculate elapsed time
+                    let progress = elapsedTime / TURN_DURATION; // Calculate progress of the turn
+
+                    if (progress >= 1) { // If the turn is complete
+                        isTurning = false; // Reset turning state
+                        currentDirection = nextDirection; // Update direction
+                        nextDirection = null; // Clear next direction
+                        ctx.drawImage(headImages[currentDirection], segment.visualX, segment.visualY, GRID_SIZE, GRID_SIZE); // Draw the head image
+                    } else {
+                        let turnKey = `${currentDirection}_to_${nextDirection}`; // Get the turn frame key
+                        ctx.drawImage(turnFrames[turnKey], segment.visualX, segment.visualY, GRID_SIZE, GRID_SIZE); // Draw the turn frame image
+                    }
+                } else {
+                    ctx.drawImage(headImages[currentDirection], segment.visualX, segment.visualY, GRID_SIZE, GRID_SIZE); // Draw the head image
+                }
+            } else {
+                // Draw the body part image for each body segment
+                ctx.drawImage(bodyPartImage, segment.visualX + horizontalOffset, segment.visualY + verticalOffset, BODY_PART_WIDTH, BODY_PART_HEIGHT);
+            }
+        });
+    }
+
+    // Function to draw food items on the canvas
+    function drawFood() {
+        logDebug('foodGeneration', "Preparing to draw food items:", gameState.foods.length); // Log the food drawing process
+
+        gameState.foods.forEach(food => {
+            // Set the style for the food item based on its value
+            const foodStyle = food.value > 0 ? styleConfig.foodPositive : styleConfig.foodNegative;
+
+            // Draw the number on the food item
+            ctx.font = foodStyle.textFont; // Set font for the food item
+            ctx.fillStyle = foodStyle.textColor; // Set text color for the food item
+            ctx.textAlign = 'center'; // Align text to be centered
+            ctx.textBaseline = 'middle'; // Align text in the middle of the box vertically
+            ctx.fillText(food.value.toString(), food.x + snakeSize / 2, food.y + snakeSize / 2); // Position the text in the center of the square
+        });
+    }
+
+    // Function to draw the game over screen
+    function drawGameOver() {
+        ctx.fillStyle = 'rgba(0,0,0,0.8)'; // Set the overlay color
+        ctx.fillRect(0, 0, canvas.width, canvas.height); // Draw the overlay
+    
+        ctx.font = '24px Arial'; // Set font for the game over text
+        ctx.fillStyle = 'white'; // Set text color
+        ctx.textAlign = 'center'; // Center the text
+        ctx.fillText(`Game Over! Your score: ${gameState.score}`, canvas.width / 2, canvas.height / 2); // Display the score
+    
+        ctx.font = '18px Arial'; // Set font for the restart text
+        ctx.fillText('Press Enter to restart', canvas.width / 2, canvas.height / 2 + 40); // Display the restart instruction
+    
+        ValuesUpdateModule.updateScoreDisplay(); // Update the score display
+        ValuesUpdateModule.updateGoalDisplay(); // Update the goal display
+        ValuesUpdateModule.updateCurrentValueDisplay(); // Update the current value display
+        ValuesUpdateModule.updateLastOperationDisplay(); // Update the last operation display
+    
+        console.log("Game over screen displayed."); // Log for debugging
+    }
+
+
+
+    return {
+        drawUI,
+        drawSnake,
+        drawFood,
+        drawGameOver,
+    };
+
+}());
+
+let previousRefreshAvailable = gameState.refreshAvailable;
+let previousQuickRefreshAvailable = gameState.quickRefreshAvailable;
+let previousMultiplyPowerUpAvailable = gameState.multiplyPowerUpAvailable;
+
+
+function powerUpIndicatorsUpdate() { 
+    if (gameState.refreshAvailable !== previousRefreshAvailable ||
+        gameState.quickRefreshAvailable !== previousQuickRefreshAvailable ||
+        gameState.multiplyPowerUpAvailable !== previousMultiplyPowerUpAvailable) {
+
+        updatePowerUpIndicators();
+
+        // Update previous states
+        previousRefreshAvailable = gameState.refreshAvailable;
+        previousQuickRefreshAvailable = gameState.quickRefreshAvailable;
+        previousMultiplyPowerUpAvailable = gameState.multiplyPowerUpAvailable;
+    }
 }
 
 // Function to create a new div element and add it to the game canvas
@@ -142,119 +245,116 @@ function createDiv(gameCanvas, className, x, y, text = '', extraClass = '') {
 // Example div creation
 createDiv(gameCanvas, 'some-class', 100, 100, 'Example Text');
 
-// Function to draw the snake on the canvas
-function drawSnake() {
-    gameState.snake.forEach((segment, index) => {
-        segment.visualX = segment.x; // Set visual X coordinate
-        segment.visualY = segment.y; // Set visual Y coordinate
 
-        if (index === 0) { // If the segment is the head
-            // Draw the head image based on the current direction
-            if (isTurning) { // If the snake is turning
-                let elapsedTime = performance.now() - turnStartTime; // Calculate elapsed time
-                let progress = elapsedTime / TURN_DURATION; // Calculate progress of the turn
-
-                if (progress >= 1) { // If the turn is complete
-                    isTurning = false; // Reset turning state
-                    currentDirection = nextDirection; // Update direction
-                    nextDirection = null; // Clear next direction
-                    ctx.drawImage(headImages[currentDirection], segment.visualX, segment.visualY, GRID_SIZE, GRID_SIZE); // Draw the head image
-                } else {
-                    let turnKey = `${currentDirection}_to_${nextDirection}`; // Get the turn frame key
-                    ctx.drawImage(turnFrames[turnKey], segment.visualX, segment.visualY, GRID_SIZE, GRID_SIZE); // Draw the turn frame image
-                }
-            } else {
-                ctx.drawImage(headImages[currentDirection], segment.visualX, segment.visualY, GRID_SIZE, GRID_SIZE); // Draw the head image
-            }
-        } else {
-            // Draw the body part image for each body segment
-            ctx.drawImage(bodyPartImage, segment.visualX + horizontalOffset, segment.visualY + verticalOffset, BODY_PART_WIDTH, BODY_PART_HEIGHT);
+// ------------
+// Game Update
+// ------------
+const ValuesUpdateModule =(function() {
+    // Function to update the score display element
+    function updateScoreDisplay() {
+        const scoreDisplay = document.querySelector('.score-display'); // Select the score display element
+        if (scoreDisplay) {
+            scoreDisplay.innerHTML = `Score:<br> ${gameState.score}`; // Update the score text
         }
-    });
-}
-
-// Function to draw food items on the canvas
-function drawFood() {
-    logDebug('foodGeneration', "Preparing to draw food items:", gameState.foods.length); // Log the food drawing process
-
-    gameState.foods.forEach(food => {
-        // Set the style for the food item based on its value
-        const foodStyle = food.value > 0 ? styleConfig.foodPositive : styleConfig.foodNegative;
-
-        // Draw the number on the food item
-        ctx.font = foodStyle.textFont; // Set font for the food item
-        ctx.fillStyle = foodStyle.textColor; // Set text color for the food item
-        ctx.textAlign = 'center'; // Align text to be centered
-        ctx.textBaseline = 'middle'; // Align text in the middle of the box vertically
-        ctx.fillText(food.value.toString(), food.x + snakeSize / 2, food.y + snakeSize / 2); // Position the text in the center of the square
-    });
-}
-
-// Function to draw the game over screen
-function drawGameOver() {
-    ctx.fillStyle = 'rgba(0,0,0,0.8)'; // Set the overlay color
-    ctx.fillRect(0, 0, canvas.width, canvas.height); // Draw the overlay
-
-    ctx.font = '24px Arial'; // Set font for the game over text
-    ctx.fillStyle = 'white'; // Set text color
-    ctx.textAlign = 'center'; // Center the text
-    ctx.fillText(`Game Over! Your score: ${gameState.score}`, canvas.width / 2, canvas.height / 2); // Display the score
-
-    ctx.font = '18px Arial'; // Set font for the restart text
-    ctx.fillText('Press Enter to restart', canvas.width / 2, canvas.height / 2 + 40); // Display the restart instruction
-
-    updateScoreDisplay(); // Update the score display
-    updateGoalDisplay(); // Update the goal display
-    updateCurrentValueDisplay(); // Update the current value display
-    updateLastOperationDisplay(); // Update the last operation display
-
-    console.log("Game over screen displayed."); // Log for debugging
-}
-
-// Function to update the score display element
-function updateScoreDisplay() {
-    const scoreDisplay = document.querySelector('.score-display'); // Select the score display element
-    if (scoreDisplay) {
-        scoreDisplay.innerText = `Score: ${gameState.score}`; // Update the score text
     }
-}
 
-// Function to update the goal display element
-function updateGoalDisplay() {
-    const goalDisplay = document.querySelector('.goal-display'); // Select the goal display element
-    if (goalDisplay) {
-        goalDisplay.innerText = `${gameState.goalNumber}`; // Update the goal text
+    // Function to update the goal display element
+    function updateGoalDisplay() {
+        const goalDisplay = document.querySelector('.goal-display'); // Select the goal display element
+        if (goalDisplay) {
+            goalDisplay.innerHTML = `Goal:<br>${gameState.goalNumber}`; // Update the goal text
+        }
     }
-}
 
-// Function to update the current value display element
-function updateCurrentValueDisplay() {
-    const cValueDisplay = document.querySelector('.cValue-display'); // Select the current value display element
-    if (cValueDisplay) {
-        cValueDisplay.innerText = `${gameState.currentValue}`; // Update the current value text
+    // Function to update the current value display element
+    function updateCurrentValueDisplay() {
+        const cValueDisplay = document.querySelector('.cValue-display'); // Select the current value display element
+        if (cValueDisplay) {
+            cValueDisplay.innerHTML = `C. Val.:<br> ${gameState.currentValue}`; // Update the current value text
+        }
     }
-}
 
-// Function to update the last operation display element
-function updateLastOperationDisplay() {
-    const lastOp = document.querySelector('.lastOp-display'); // Select the last operation display element
-    if (lastOp) {
-        lastOp.innerText = `${gameState.lastOperation}`; // Update the last operation text
+    // Function to update the last operation display element
+    function updateLastOperationDisplay() {
+        const lastOp = document.querySelector('.lastOp-display'); // Select the last operation display element
+        if (lastOp) {
+            lastOp.innerHTML = `&nbsp;&nbsp;Last Nº:<br>${gameState.lastOperation}`; // Update the last operation text
+        }
     }
-}
+    return {
+        updateScoreDisplay,
+        updateGoalDisplay,
+        updateCurrentValueDisplay,
+        updateLastOperationDisplay
+    };
+})();
 
 // Function to update the game state based on delta time
 function updateGameState(deltaTime) {
     SnakeModule.moveSnake(deltaTime); // Move the snake based on delta time
 
-    updateScoreDisplay(); // Update the score display
-    updateGoalDisplay(); // Update the goal display
-    updateCurrentValueDisplay(); // Update the current value display
-    updateLastOperationDisplay(); // Update the last operation display
+    powerUpIndicatorsUpdate();
+    ValuesUpdateModule.updateScoreDisplay(); // Update the score display
+    ValuesUpdateModule.updateGoalDisplay(); // Update the goal display
+    ValuesUpdateModule.updateCurrentValueDisplay(); // Update the current value display
+    ValuesUpdateModule.updateLastOperationDisplay(); // Update the last operation display
 }
 
 // Start the game loop
 requestAnimationFrame(gameLoop);
+
+// Resize the canvas while maintaining the aspect ratio
+function resizeCanvas() {
+    const frameContainer = document.querySelector('.frame-container');
+    const canvas = document.getElementById('gameCanvas');
+    const aspectRatio = 720 / 480; // Aspect ratio of the game canvas
+
+    const containerWidth = frameContainer.clientWidth;
+    const containerHeight = frameContainer.clientHeight;
+    const containerAspectRatio = containerWidth / containerHeight;
+
+    if (containerAspectRatio > aspectRatio) {
+        // If container is wider than the aspect ratio, fit by height
+        canvas.style.height = `${containerHeight}px`;
+        canvas.style.width = `${containerHeight * aspectRatio}px`;
+    } else {
+        // If container is taller than the aspect ratio, fit by width
+        canvas.style.width = `${containerWidth}px`;
+        canvas.style.height = `${containerWidth / aspectRatio}px`;
+    }
+
+    // Adjust the size of the canvas
+    canvas.width = canvas.clientWidth;
+    canvas.height = canvas.clientHeight;
+}
+
+window.addEventListener('resize', resizeCanvas);
+document.addEventListener('DOMContentLoaded', () => {
+    resizeCanvas();
+});
+
+function hidePowerUpIcons() {
+    gameState.hidePowerUpIcons = !gameState.hidePowerUpIcons; // Toggle the hidden state
+    updatePowerUpIndicators(); // Update indicators after toggling visibility
+}
+
+// Redraw the indicators whenever their state changes
+// Function to update the visibility and source of power-up indicators
+// Function to update the visibility and source of power-up indicators
+function updatePowerUpIndicators() {
+    const multiplyIndicator = document.getElementById('multiplyIndicator');
+    const refreshIndicator = document.getElementById('refreshIndicator');
+    const quickRefreshIndicator = document.getElementById('quickRefreshIndicator');
+
+    multiplyIndicator.src = gameState.multiplyPowerUpAvailable ? 'imgs/icons/multiply_ready.png' : 'imgs/icons/multiply_notReady.png';
+    refreshIndicator.src = gameState.refreshAvailable ? 'imgs/icons/refresh_ready.png' : 'imgs/icons/refresh_notReady.png';
+    quickRefreshIndicator.src = gameState.quickRefreshAvailable ? 'imgs/icons/quickRefresh_ready.png' : 'imgs/icons/quickRefresh_notReady.png';
+
+    multiplyIndicator.className = gameState.hidePowerUpIcons ? 'indicator hidden' : 'indicator visible';
+    refreshIndicator.className = gameState.hidePowerUpIcons ? 'indicator hidden' : 'indicator visible';
+    quickRefreshIndicator.className = gameState.hidePowerUpIcons ? 'indicator hidden' : 'indicator visible';
+}
+
 
 
 // ------------
@@ -391,9 +491,11 @@ const FoodModule = (function() {
             gameState.quickRefreshAvailable = true;
             gameState.powerUpActive = false;
             logDebug('powerUps', "Quick refresh activated for 5 seconds.");
+            updatePowerUpIndicators();
             setTimeout(() => {
                 gameState.quickRefreshAvailable = false;
                 console.log("Quick refresh now unavailable.");
+                updatePowerUpIndicators();
             }, 5000);
         }
     }
@@ -438,7 +540,7 @@ const FoodModule = (function() {
                     gameState.foods.push({x, y, value});
                 }
             }
-            drawFood(); // Draw the newly generated food
+            drawModule.drawFood(); // Draw the newly generated food
         }
     }
 
@@ -476,10 +578,10 @@ const FoodModule = (function() {
                 }
                 // Positive food collection logic
                 if (gameState.multiplyPowerUpAvailable && gameState.multiplyPowerUpUses < 2) {
-                    SnakeModule.addSnakeSegments(4); // Grow by 4 segments instead of 2 when collecting positives
+                    SnakeModule.addSnakeSegments(2); // Grow by 4 segments instead of 2 when collecting positives
                     logDebug('snakeSegments', `Snake grew to ${gameState.snake.length} segments after eating positive food.`);
                 } else {
-                    SnakeModule.addSnakeSegments(2); // Normal growth 
+                    SnakeModule.addSnakeSegments(1); // Normal growth 
                 }
             } else {
                 // Negative food collection logic
@@ -627,6 +729,7 @@ const PowerUpsModule = (function() {
             startTime: Date.now(),
             callback: executePowerUpEndLogic
         });
+        
     }
 
     // Function to handle the activation of the quick refresh
@@ -635,7 +738,7 @@ const PowerUpsModule = (function() {
 
         if (gameState.quickRefreshAvailable) {
             logDebug('powerUps', "Quick refresh activated, overriding any existing power-up.");
-
+            
             // Clear only the active power-up effects and timers, keep cooldown timers
             gameState.activeTimers = gameState.activeTimers.filter(timer => {
                 if (timer.type === 'powerUp') {
@@ -648,7 +751,7 @@ const PowerUpsModule = (function() {
             gameState.powerUpActive = false;
             FoodModule.moveFood(true); // Perform a quick refresh with special conditions
             gameState.quickRefreshAvailable = false; // Quick refresh used, becomes unavailable
-
+            updatePowerUpIndicators();
             // Set the duration for the quick refresh effect
             let quickRefreshDuration = 15000; // Duration in milliseconds
             setTimeout(() => {
@@ -729,26 +832,15 @@ const PowerUpsModule = (function() {
         }
     }
 
-    // Use this function to handle refresh based on quick refresh state or regular refresh availability
-    // eslint-disable-next-line no-unused-vars
-    function handleRefreshPowerUp() {
-        if (gameState.gameOver) return;
-        if (gameState.quickRefreshAvailable) {
-            logDebug('powerUps', "Using quick refresh.");
-            FoodModule.moveFood(true); // Perform a quick refresh with special conditions
-            gameState.quickRefreshAvailable = false; // Disable quick refresh immediately after use
-        } else if (gameState.refreshAvailable && !gameState.powerUpActive) {
-            activateRefreshPowerUp();
-        }
-    }
+    
 
     // Expose the module's functions
     return {
         activateRefreshPowerUp,
         activateQuickRefresh,
         toggleMultiplyPowerUp,
-        assessBoardBeforeAutoRefresh,
-        handleRefreshPowerUp
+        assessBoardBeforeAutoRefresh
+        
     }
 })();
 
@@ -797,6 +889,7 @@ const GameControl = (function() {
 
     // Start the game loop after the DOM content is loaded
     document.addEventListener('DOMContentLoaded', () => {
+        updatePowerUpIndicators();
         initGame(); 
         requestAnimationFrame(gameLoop); // Start the game loop after initializing
     });
@@ -835,7 +928,7 @@ const GameControl = (function() {
 
         clearTimeout(gameState.refreshPowerUpTimer); // Clear any ongoing timers
         clearTimers(); // Clear all active game timers
-        drawGameOver(); // Draw the game over screen
+        drawModule.drawGameOver(); // Draw the game over screen
 
         // Reset power-up and game variables
         gameState.refreshAvailable = true;
@@ -878,10 +971,10 @@ function restartGame() {
         console.log("Game has been restarted."); // Debugging log
 
         // Update displays
-        updateScoreDisplay();
-        updateGoalDisplay();
-        updateCurrentValueDisplay();
-        updateLastOperationDisplay();
+        ValuesUpdateModule.updateScoreDisplay();
+        ValuesUpdateModule.updateGoalDisplay();
+        ValuesUpdateModule.updateCurrentValueDisplay();
+        ValuesUpdateModule.updateLastOperationDisplay();
     }
 
     // Expose the module's functions
@@ -904,14 +997,15 @@ function clearTimers() {
 // Function to redraw the game canvas
 function redrawGameCanvas() {
     if (gameState.gameOver) {
-        drawGameOver();
+        drawModule.drawGameOver();
         return;  // Do not draw anything else if the game is over
     }
 
     ctx.clearRect(0, 0, canvas.width, canvas.height); // Clear the canvas for new drawing
-    drawSnake();  // Draw the snake
-    drawFood();   // Draw the food
-    drawUI();     // Draw the UI elements
+    drawModule.drawSnake();  // Draw the snake
+    drawModule.drawFood();   // Draw the food
+    drawModule.drawUI();     // Draw the UI elements
+
 }
 
 // ------------
@@ -952,13 +1046,16 @@ function processDirectionChange(e) {
         GameControl.restartGame(); // Restart the game if Enter is pressed and the game is over
     } else if (e.key === 'Escape') {
         GameControl.setPause(!gameState.isPaused); // Toggle pause state if Escape is pressed
-    } else if (gameState.isPaused) {
-        GameControl.setPause(false); // Unpause the game if any direction key is pressed while paused
-    } else if (!gameState.isPaused) {
+
+    } else if (e.key === 'Tab') {
+        e.preventDefault(); // Prevent default tab behavior
+        hidePowerUpIcons();
+
+    } else if (!gameState.isPaused || isMoveKey(e.key)) {
         let newHorizontalVelocity = gameState.currentVelocity.horizontal;
         let newVerticalVelocity = gameState.currentVelocity.vertical;
         let newDirection = currentDirection;
-
+    
         logDebug('keyEvents', `Key pressed: ${e.key}`); // Debug log for key presses
 
         // Determine the new direction and velocity based on the key pressed
@@ -1027,7 +1124,15 @@ function processDirectionChange(e) {
             turnStartTime = performance.now(); // Record the start time of the turn animation
             logDebug('keyEvents', `Velocity updated to: Horizontal ${gameState.currentVelocity.horizontal}, Vertical ${gameState.currentVelocity.vertical}`); // Confirm velocity update
         }
+        if (gameState.isPaused && isMoveKey(e.key)) {
+            GameControl.setPause(false); // Unpause the game if a move key is pressed
+        }
     }
+}
+
+// Helper function to determine if the key is a movement key
+function isMoveKey(key) {
+    return ['ArrowUp', 'w', 'W', 'ArrowDown', 's', 'S', 'ArrowLeft', 'a', 'A', 'ArrowRight', 'd', 'D'].includes(key);
 }
 
 // Interval to check for buffered direction changes and apply them if debounce period has passed
@@ -1045,7 +1150,7 @@ setInterval(() => {
 // Start the game
 function gameLoop(currentTime) {
     if (gameState.gameOver) {
-        drawGameOver();
+        drawModule.drawGameOver();
         return; // Stop the loop by not requesting another frame
     }
     
@@ -1058,5 +1163,8 @@ function gameLoop(currentTime) {
     }
 
     redrawGameCanvas(); // Redraw everything every frame
+
+    // Draw power-up indicator
+
     requestAnimationFrame(gameLoop); // Continue the loop if not game over or paused
 }

@@ -1,42 +1,78 @@
+/* Base styles */
 body, html {
-    font-size: 16;
+    font-size: 16px;
     margin: 0;
     padding: 0;
     display: flex;
     justify-content: center;
     align-items: center;
+    height: 100%;
+    box-sizing: border-box;
     background-color: #171c28;
+    color: #fff;
 }
+
+.game-container {
+    position: relative;
+    width: 720px; /* Set the width of the container */
+    height: 480px; /* Set the height of the container */
+}
+
 #gameCanvas {
-    width: 720px;
-    height: 480px;
-    background-color: #050523;
     background-image: url("imgs/board(1).png");
-    position: absolute;
-    margin: auto;
     display: block;
-    justify-content: center;
-    align-items: center;
-    top: 22.20%;
-    left: 31.25%;
-    z-index: 100;
+    width: 100%;
+    top: 0px;
+    transform: translate(-0, -10.8%);
+    height: auto; /* Maintain aspect ratio */
+    max-width: 720px; /* Maximum canvas width */
+    max-height: 482px; /* Maximum canvas height */
 }
 
+/* Frame and Game canvas styling */
 .frame-container {
-    position: relative;
-    width: fit-content;
+    position: absolute;
+    width: 100%;
+    max-width: 990px;
+    height: auto;
     margin: auto;
-}
-.frame {
-    padding-top: 64px;
-    position: relative;
-    z-index: 500;
+    aspect-ratio: 3 / 2; /* Maintain 720x480 aspect ratio */
+    background-size: contain;
+    background-repeat: no-repeat;
+    background-position: center;
 }
 
+
+.frame {
+    width: 100%;
+    height: auto; /* Maintain aspect ratio */
+    z-index: 10;
+}
+
+@media (max-width: 989px) {
+    .frame {
+        visibility: hidden; /* Hide frame when frame width lower than 990px*/
+    }
+
+    .frame-container {
+        width: 100%;
+        max-width: 720px; /* Ensure the container doesn't shrink below canvas size */
+    }
+}
+@media (max-height: 860px) {
+    .frame {
+        visibility: hidden; /* Hide frame when frame height below 861px */
+    }
+
+    .frame-container {
+        width: 100%;
+        max-height: 480px; /* Ensure the container doesn't shrink below canvas size */
+    }
+}
 
 .score-display {
     position: absolute;
-    top: 14.8%;
+    top: 8.5%;
     left: 34.9%;
     transform: translate(-50%, -50%);
     color: green;
@@ -48,8 +84,8 @@ body, html {
 
 .goal-display {
     position: absolute;
-    top: 14.8%;
-    left: 64.6%;
+    top: 8.5%;
+    left: 64.9%;
     transform: translate(-50%, -50%);
     color: green;
     font-family: Arial, sans-serif;
@@ -58,11 +94,10 @@ body, html {
     z-index: 1000;
 }
 
-
 .lastOp-display {
     position: absolute;
-    top: 14.8%;
-    left: 45%;
+    top: 8.5%;
+    left: 45.0%;
     transform: translate(-50%, -50%);
     color: green;
     font-family: Arial, sans-serif;
@@ -73,12 +108,68 @@ body, html {
 
 .cValue-display {
     position: absolute;
-    top: 14.8%;
-    left: 54%;
+    top: 8.5%;
+    left: 54.5%;
     transform: translate(-50%, -50%);
     color: green;
     font-family: Arial, sans-serif;
     font-size: 16px;
     text-align: center;
     z-index: 1000;
+}
+
+.score-display, .goal-display, .cValue-display, .lastOp-display {
+    text-align: center; /* Center align the text */
+    font-family: Arial, sans-serif;
+    font-size: 16px;
+    line-height: 1.5; /* Adjust line height for better spacing */
+}
+
+@keyframes slideOut {
+    from {
+        transform: translateX(0%);
+    }
+    to {
+        transform: translateX(100%);
+        display: none;
+    }
+
+}
+
+@keyframes slideIn {
+    from {
+        transform: translateX(100%);
+        display: none;
+    }
+    to {
+        transform: translateX(0%);
+    }
+
+}
+
+.hidden {
+    animation: slideIn 0.5s forwards;
+}
+.visible {
+    animation: slideOut 0.5s forwards;
+}
+
+.indicators-container {
+    position: absolute;
+    top: 20%;
+    right: 0;
+    width: 45px; /* Width of the indicators */
+    overflow: hidden; /* Hide overflow content */
+}
+
+.indicators {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 0px;
+}
+
+.indicator {
+    width: 45px;
+    margin: 5px 0;
 }
