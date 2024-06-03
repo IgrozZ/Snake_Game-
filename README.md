@@ -18,7 +18,7 @@ The goal is to reach each target goal displayed on the game's rightmost visor. P
 
 #
 ## Controls:
-- Game Start: ESC or W, A, S or D.
+- Game Start: ESC or W, A, S, D or Arrow keys.
 - Move: W, A, S, D or Arrow keys.
 - Refresh power-up: R
 - Quick refresh power-up: R (after collecting every positive while in refresh state).
