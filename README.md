@@ -36,7 +36,3 @@ The goal is to reach each target goal displayed on the game's rightmost visor. P
 
 ## Added Features
 - 05/30 - "Power-up Icons: Adding icons and timers for power-ups." Done.
-- 
-
-## Recursos Implementados:
-- 30/05 - "Ícones de Power-ups: Adição de ícones e temporizadores para power-ups." Feito.
