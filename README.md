@@ -23,7 +23,7 @@ The goal is to reach each target goal displayed on the game's rightmost visor. P
 - Refresh power-up: R
 - Quick refresh power-up: R (after collecting every positive while in refresh state).
 - Multiply: M
-- Show Power-ups icons: TAB
+- Show/Hide Power-ups icons: TAB
 - Pause: ESC.
 #
 
