@@ -3,15 +3,21 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Bungee&family=Quicksand:wght@300..700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Bungee&family=Press+Start+2P&family=Quicksand:wght@300..700&display=swap" rel="stylesheet">
+    
+    <title>Snake Game</title>
     <title>Snake Game</title>
     <link rel="stylesheet" href="mathstyle.css">
 </head>
+
 <body>
+    
     <div id="gameContainer" class="game-container">
         <canvas id="gameCanvas" width="720" height="480"></canvas>
+
         <div id="indicatorsContainer" class="indicators-container">
             <div id="indicators" class="indicators">
                 <img id="multiplyIndicator" class="indicator" src="imgs/icons/multiply_notReady.png" alt="Multiply Power-Up">
@@ -20,19 +26,18 @@
             </div>
         </div>
     </div>
-    
+
     <script src="styleConfig.js"></script>
     <script src="mathscript.js"></script>
 
     <div class="frame-container">
         <img src="imgs/frame/frame2.png" alt="Game's Frame" class="frame">
+
         <div class="score-display"></div>
-
         <div class="goal-display"></div>
-
         <div class="cValue-display"></div>
-
         <div class="lastOp-display"></div>
     </div>
+
 </body>
 </html>

@@ -119,8 +119,6 @@ const turnFrames = {
 };
 
 
-
-
 // ------------
 // Game Drawing
 // ------------
@@ -185,12 +183,12 @@ function drawUI() {
         ctx.fillStyle = 'rgba(0,0,0,0.8)'; // Set the overlay color
         ctx.fillRect(0, 0, canvas.width, canvas.height); // Draw the overlay
     
-        ctx.font = '24px Arial'; // Set font for the game over text
+        ctx.font = '24px "Press Start 2P"'; // Set font for the game over text
         ctx.fillStyle = 'white'; // Set text color
         ctx.textAlign = 'center'; // Center the text
         ctx.fillText(`Game Over! Your score: ${gameState.score}`, canvas.width / 2, canvas.height / 2); // Display the score
     
-        ctx.font = '18px Arial'; // Set font for the restart text
+        ctx.font = '18px "Press Start 2P"'; // Set font for the restart text
         ctx.fillText('Press Enter to restart', canvas.width / 2, canvas.height / 2 + 40); // Display the restart instruction
     
         ValuesUpdateModule.updateScoreDisplay(); // Update the score display
@@ -200,8 +198,6 @@ function drawUI() {
     
         console.log("Game over screen displayed."); // Log for debugging
     }
-
-
 
     return {
         drawUI,
@@ -215,7 +211,6 @@ function drawUI() {
 let previousRefreshAvailable = gameState.refreshAvailable;
 let previousQuickRefreshAvailable = gameState.quickRefreshAvailable;
 let previousMultiplyPowerUpAvailable = gameState.multiplyPowerUpAvailable;
-
 
 function powerUpIndicatorsUpdate() { 
     if (gameState.refreshAvailable !== previousRefreshAvailable ||
@@ -281,6 +276,7 @@ const ValuesUpdateModule =(function() {
             lastOp.innerHTML = `&nbsp;&nbsp;Last Nº:<br>${gameState.lastOperation}`; // Update the last operation text
         }
     }
+    
     return {
         updateScoreDisplay,
         updateGoalDisplay,
@@ -354,7 +350,6 @@ function updatePowerUpIndicators() {
     refreshIndicator.className = gameState.hidePowerUpIcons ? 'indicator hidden' : 'indicator visible';
     quickRefreshIndicator.className = gameState.hidePowerUpIcons ? 'indicator hidden' : 'indicator visible';
 }
-
 
 
 // ------------
@@ -832,8 +827,6 @@ const PowerUpsModule = (function() {
         }
     }
 
-    
-
     // Expose the module's functions
     return {
         activateRefreshPowerUp,
@@ -1008,10 +1001,10 @@ function redrawGameCanvas() {
 
 }
 
+
 // ------------
 // Event Listener
 // ------------
-
 // Debounce interval in milliseconds to prevent rapid direction changes
 const directionChangeDebounce = 100;
 let lastDirectionChangeTime = 0; // Timestamp of the last direction change
